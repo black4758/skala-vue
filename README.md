@@ -41,6 +41,21 @@
 
 ---
 
+## 과제 4: Weather Router (Vue Router 적용)
+
+Vue Router를 도입하여 SPA(Single Page Application)로 구현했습니다. 주요 라우팅 및 뷰(View) 파일은 아래와 같습니다.
+
+- **라우터 설정**: [src/router/index.js](src/router/index.js)
+- **메인 레이아웃**: [src/App.vue](src/App.vue)
+- **Views (페이지)**:
+  - 대시보드 (Home): [src/views/WeatherHomeView.vue](src/views/WeatherHomeView.vue)
+  - 서비스 소개 (About): [src/views/WeatherAboutView.vue](src/views/WeatherAboutView.vue)
+  - 상세 날씨 (Detail): [src/views/WeatherDetailView.vue](src/views/WeatherDetailView.vue)
+  - 기상 통계 (Stats): [src/views/WeatherStatsView.vue](src/views/WeatherStatsView.vue)
+  - 404 에러 (NotFound): [src/views/NotFoundView.vue](src/views/NotFoundView.vue)
+
+---
+
 ### 실행 방법
 ```sh
 npm install
