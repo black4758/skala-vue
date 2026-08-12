@@ -54,6 +54,8 @@ Vue Router를 도입하여 SPA(Single Page Application)로 구현했습니다. �
   - 기상 통계 (Stats): [src/views/WeatherStatsView.vue](src/views/WeatherStatsView.vue)
   - 404 에러 (NotFound): [src/views/NotFoundView.vue](src/views/NotFoundView.vue)
 
+![Router 적용 결과](docs/router.png)
+
 ---
 
 ### 실행 방법
