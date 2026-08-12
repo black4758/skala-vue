@@ -58,6 +58,20 @@ Vue Router를 도입하여 SPA(Single Page Application)로 구현했습니다. �
 
 ---
 
+## 과제 5: Weather Store (Pinia 적용)
+
+Pinia를 도입하여 전역 상태 관리를 구현했습니다. 온도 단위(섭씨/화씨)와 관련된 상태와 변환 로직을 스토어에 캡슐화하여 코드 중복을 제거했습니다.
+
+- **스토어 파일**: [src/stores/configStore.js](src/stores/configStore.js)
+- **주요 기능**:
+  - `unit` (State): 현재 설정된 온도 단위 (celsius/fahrenheit)
+  - `unitSymbol` (Getter): 화면에 표시할 기호 반환 (°C / °F)
+  - `toggleUnit` (Action): 단위를 상호 전환하는 함수
+  - `convertTemp` (Action): 섭씨 원본 데이터를 현재 단위에 맞춰 변환하는 함수
+- **적용 화면**: 상단 네비게이션 바의 단위 변경 버튼(`UnitToggler.vue`) 클릭 시 메인 대시보드, 상세 날씨, 기상 통계 등 앱 전체에 단위가 일괄 적용됩니다.
+
+---
+
 ### 실행 방법
 ```sh
 npm install

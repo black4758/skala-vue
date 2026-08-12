@@ -2,8 +2,10 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useConfigStore } from '../stores/configStore'
 
 const router = useRouter()
+const configStore = useConfigStore()
 
 // 대시보드에서 사용했던 임시 데이터 재활용
 const weatherList = ref([
@@ -41,13 +43,13 @@ const highHumidityCities = computed(() => {
       <!-- 통계 카드 1: 평균 기온 -->
       <div class="stat-card">
         <h3>🌡️ 전국 평균 기온</h3>
-        <div class="stat-value">{{ averageTemp }}°C</div>
+        <div class="stat-value">{{ configStore.convertTemp(averageTemp) }}{{ configStore.unitSymbol }}</div>
       </div>
 
       <!-- 통계 카드 2: 최고 기온 지역 -->
       <div class="stat-card hottest">
         <h3>🔥 가장 더운 지역</h3>
-        <div class="stat-value">{{ hottestCity.name }} ({{ hottestCity.temp }}°C)</div>
+        <div class="stat-value">{{ hottestCity.name }} ({{ configStore.convertTemp(hottestCity.temp) }}{{ configStore.unitSymbol }})</div>
         <button @click="router.push('/weather/' + hottestCity.id)" class="link-btn">
           상세보기
         </button>

@@ -1,13 +1,25 @@
 <!-- src/App.vue -->
+<script setup>
+// 💡 UnitToggler 컴포넌트를 불러옵니다!
+import UnitToggler from './components/exercise/UnitToggler.vue'
+</script>
+
 <template>
   <div class="app-container">
     <!-- 내비게이션 바 -->
     <nav class="main-nav">
       <h1>☁️ Weather App</h1>
-      <div class="links">
-        <RouterLink to="/">대시보드</RouterLink>
-        <RouterLink to="/about">서비스 소개</RouterLink>
-        <RouterLink to="/stats">기상 통계</RouterLink>
+      
+      <!-- 💡 링크들과 토글 버튼을 나란히 두기 위해 nav-right라는 div로 묶어줍니다 -->
+      <div class="nav-right">
+        <div class="links">
+          <RouterLink to="/">대시보드</RouterLink>
+          <RouterLink to="/about">서비스 소개</RouterLink>
+          <RouterLink to="/stats">기상 통계</RouterLink>
+        </div>
+        
+        <!-- 💡 여기에 단위 변경 토글 버튼 배치! -->
+        <UnitToggler />
       </div>
     </nav>
 
@@ -38,6 +50,13 @@
   margin: 0;
   font-size: 1.5rem;
   color: #0f172a;
+}
+
+/* 💡 새로 추가된 스타일: 링크들과 토글 버튼 사이의 간격을 조절합니다 */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
 }
 
 .links {

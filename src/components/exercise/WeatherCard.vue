@@ -1,11 +1,15 @@
 <!-- WeatherCard.vue -->
 <script setup>
+import { useConfigStore } from '../../stores/configStore'
+
 defineProps({
   city: Object,
   isActive: Boolean
 })
 
 defineEmits(['select-card', 'click-detail'])
+
+const configStore = useConfigStore()
 </script>
 
 <template>
@@ -25,8 +29,8 @@ defineEmits(['select-card', 'click-detail'])
 
     <div class="card-body">
       <div class="temp-display">
-        <span class="temp-value">{{ city.temp }}</span>
-        <span class="temp-unit">°C</span>
+        <span class="temp-value">{{ configStore.convertTemp(city.temp) }}</span>
+        <span class="temp-unit">{{ configStore.unitSymbol }}</span>
       </div>
       <div class="humidity-display">
         <span class="label">습도</span>

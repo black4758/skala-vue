@@ -2,10 +2,12 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useConfigStore } from '../stores/configStore'
 
 const route = useRoute()
 const router = useRouter()
 const cityDetail = ref(null)
+const configStore = useConfigStore()
 
 // 임시 Mock Data (상세 기상관측 정보 추가)
 const mockDetailData = [
@@ -36,8 +38,8 @@ const goBack = () => {
 
       <!-- 메인 기온 영역 -->
       <div class="main-temp-display">
-        <span class="temp">{{ cityDetail.temp }}</span>
-        <span class="unit">°C</span>
+        <span class="temp">{{ configStore.convertTemp(cityDetail.temp) }}</span>
+        <span class="unit">{{ configStore.unitSymbol }}</span>
       </div>
 
       <!-- 상세 정보 그리드 영역 -->
