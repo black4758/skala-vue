@@ -18,7 +18,7 @@ const weatherList = ref([
 // 💡 배운 것 활용 1: 전체 평균 기온 계산
 const averageTemp = computed(() => {
   const total = weatherList.value.reduce((sum, city) => sum + city.temp, 0)
-  return (total / weatherList.value.length).toFixed(1) // 소수점 1자리까지
+  return (total / weatherList.value.length).toFixed(0) // 소수점 1자리까지
 })
 
 // 💡 배운 것 활용 2: 가장 기온이 높은 도시 찾기
