@@ -36,8 +36,8 @@
   - [src/components/ weathercomponent/SearchBar.vue](src/components/%20weathercomponent/SearchBar.vue)
   - [src/components/ weathercomponent/BaseDashboardCard.vue](src/components/%20weathercomponent/BaseDashboardCard.vue)
   - [src/components/ weathercomponent/SelectionFeedback.vue](src/components/%20weathercomponent/SelectionFeedback.vue)
-   <br>
-   ![결과 이미지](docs/weatherComposition_css.png)
+
+![결과 이미지](docs/weatherComposition_css.png)
 
 ---
 
