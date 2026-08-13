@@ -46,6 +46,16 @@ const windiestCity = computed(() => {
 const cleanAirCities = computed(() => {
   return weatherStore.weatherList.filter(city => city.fineDust.includes('좋음'))
 })
+
+// 💡 추가 활용 7: 여행가기 좋은 지역 추천 (온도 18~26도, 습도 60% 이하, 미세먼지 좋음/보통)
+const goodTravelCities = computed(() => {
+  return weatherStore.weatherList.filter(city => {
+    const isGoodTemp = city.temp >= 18 && city.temp <= 26
+    const isGoodHumidity = city.humidity <= 60
+    const isGoodAir = city.fineDust.includes('좋음') || city.fineDust.includes('보통')
+    return isGoodTemp && isGoodHumidity && isGoodAir
+  })
+})
 </script>
 
 <template>
@@ -109,7 +119,7 @@ const cleanAirCities = computed(() => {
         </div>
       </div>
 
-      <!-- 리스트 2: 미세먼지 청정 구역 (신규 추가) -->
+      <!-- 리스트 2: 미세먼지 청정 구역 -->
       <div class="list-section clean-air">
         <h3>🍃 미세먼지 청정 구역</h3>
         <ul v-if="cleanAirCities.length > 0" class="warning-list">
@@ -119,6 +129,31 @@ const cleanAirCities = computed(() => {
         </ul>
         <div v-else class="empty-state">
           <p>현재 미세먼지 '좋음'인 지역이 없습니다 😢</p>
+        </div>
+      </div>
+
+      <!-- 리스트 3: 여행 추천 지역 -->
+      <div class="list-section travel">
+        <h3>
+          ✈️ 지금 여행가기 딱 좋은 지역
+          <span class="info-wrapper">
+            <i class="pi pi-info-circle info-icon"></i>
+            <span class="info-tooltip">
+              <strong>💡 추천 기준</strong><br>
+              • 온도: 18°C ~ 26°C<br>
+              • 습도: 60% 이하<br>
+              • 미세먼지: 좋음 또는 보통
+            </span>
+          </span>
+        </h3>
+        <ul v-if="goodTravelCities.length > 0" class="warning-list">
+          <li v-for="city in goodTravelCities" :key="city.id">
+            <strong>{{ city.name }}</strong>
+            <span class="status">{{ configStore.convertTemp(city.temp) }}{{ configStore.unitSymbol }}, 습도 {{ city.humidity }}%</span>
+          </li>
+        </ul>
+        <div v-else class="empty-state">
+          <p>현재 여행 조건(온도/습도/공기)에 딱 맞는 곳이 없네요 😭</p>
         </div>
       </div>
     </div>
@@ -191,9 +226,14 @@ const cleanAirCities = computed(() => {
   grid-template-columns: 1fr;
   gap: 20px;
 }
-@media (min-width: 600px) {
+@media (min-width: 768px) {
   .lists-grid {
     grid-template-columns: 1fr 1fr;
+  }
+}
+@media (min-width: 1024px) {
+  .lists-grid {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }
 
@@ -211,9 +251,61 @@ const cleanAirCities = computed(() => {
   font-size: 1.1rem;
   border-bottom: 2px solid #f1f5f9;
   padding-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .list-section.clean-air h3 {
   color: #059669;
+}
+.list-section.travel h3 {
+  color: #d97706;
+}
+
+/* 툴팁 CSS */
+.info-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: help;
+  color: #94a3b8;
+}
+.info-wrapper:hover .info-icon {
+  color: #d97706;
+}
+.info-tooltip {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 8px;
+  background: #1e293b;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: normal;
+  line-height: 1.6;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  z-index: 10;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+.info-tooltip::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 8px;
+  height: 8px;
+  background: #1e293b;
+}
+.info-wrapper:hover .info-tooltip {
+  opacity: 1;
+  visibility: visible;
 }
 
 .warning-list {
