@@ -2,6 +2,7 @@
 <script setup>
 // 💡 UnitToggler 컴포넌트를 불러옵니다!
 import UnitToggler from './components/exercise/UnitToggler.vue'
+import WeatherChatbot from './components/chatbot/WeatherChatbot.vue'
 </script>
 
 <template>
@@ -27,6 +28,9 @@ import UnitToggler from './components/exercise/UnitToggler.vue'
     <main class="content-area">
       <RouterView />
     </main>
+
+    <!-- 날씨 챗봇 컴포넌트 (전역) -->
+    <WeatherChatbot />
   </div>
 </template>
 

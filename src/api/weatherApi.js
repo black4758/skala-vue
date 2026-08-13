@@ -20,6 +20,23 @@ export const fetchWeatherByCity = async (cityName) => {
   }
 };
 
+export const fetchForecastByCity = async (cityName) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/forecast`, {
+      params: {
+        q: cityName,
+        appid: API_KEY,
+        units: 'metric',
+        lang: 'kr'
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error(`[API 에러] ${cityName} 일기예보를 가져오는데 실패했습니다:`, error);
+    throw error;
+  }
+};
+
 export const fetchAirPollution = async (lat, lon) => {
   try {
     const response = await axios.get(`${BASE_URL}/air_pollution`, {

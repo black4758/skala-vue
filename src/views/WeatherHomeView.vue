@@ -1,6 +1,6 @@
 <!-- src/views/WeatherHomeView.vue (기존 WeatherParent.vue 대체) -->
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch, watchEffect, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 // 💡 방금 만든 스토어 가져오기!
 import { useWeatherStore } from '../stores/weatherStore' 
@@ -16,7 +16,6 @@ const weatherStore = useWeatherStore() // 스토어 연결
 const searchQuery = ref('')
 const selectedCityInfo = ref(null)
 
-// 💡 화면 켜질 때 스토어의 데이터 호출 함수 실행
 onMounted(() => {
   weatherStore.fetchAllWeather()
 })
@@ -40,13 +39,18 @@ const displayWeatherList = computed(() => {
   )
 })
 
-// 선택 도시 감시
-watch(selectedCityInfo, (newCityName) => {
+watch(selectedCityInfo, (newCityName, oldCityName) => {
   if (!newCityName) return
+  console.log(`[watch] 선택 도시 변경: ${oldCityName || '없음'} -> ${newCityName}`)
+
   const targetCity = displayWeatherList.value.find((city) => city.name === newCityName)
   if (targetCity && targetCity.isHighDiscomfort) {
     alert(`⚠️ 경고: ${targetCity.name}의 불쾌지수는 [${targetCity.discomfIndex}]로 매우 높습니다!`)
   }
+})
+
+watchEffect(() => {
+  console.log(`[watchEffect] 현재 검색어: "${searchQuery.value}"`)
 })
 
 const handleUpdateQuery = (newQuery) => {

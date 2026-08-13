@@ -21,7 +21,14 @@ const averageTemp = computed(() => {
 
 // 💡 배운 것 활용 2: 가장 기온이 높은 도시 찾기
 const hottestCity = computed(() => {
+  if (weatherStore.weatherList.length === 0) return null
   return [...weatherStore.weatherList].sort((a, b) => b.temp - a.temp)[0]
+})
+
+// 💡 추가 활용 6: 가장 기온이 낮은 도시 찾기
+const coldestCity = computed(() => {
+  if (weatherStore.weatherList.length === 0) return null
+  return [...weatherStore.weatherList].sort((a, b) => a.temp - b.temp)[0]
 })
 
 // 💡 배운 것 활용 3: 습도가 70% 이상인 꿉꿉한 지역 필터링
@@ -65,12 +72,22 @@ const cleanAirCities = computed(() => {
         </button>
       </div>
 
-      <!-- 통계 카드 3: 가장 바람이 강한 지역 (신규 추가) -->
+      <!-- 통계 카드 3: 가장 바람이 강한 지역 -->
       <div class="stat-card windiest" v-if="windiestCity">
         <h3>🌬️ 바람이 가장 강한 지역</h3>
         <div class="stat-value">{{ windiestCity.name }}</div>
         <div class="stat-sub">풍속 {{ windiestCity.wind }}</div>
         <button @click="router.push('/weather/' + windiestCity.id)" class="btn-detail">
+          상세보기
+        </button>
+      </div>
+
+      <!-- 통계 카드 4: 가장 추운 지역 (신규 추가) -->
+      <div class="stat-card coldest" v-if="coldestCity">
+        <h3>❄️ 가장 추운 지역</h3>
+        <div class="stat-value">{{ coldestCity.name }}</div>
+        <div class="stat-sub">({{ configStore.convertTemp(coldestCity.temp) }}{{ configStore.unitSymbol }})</div>
+        <button @click="router.push('/weather/' + coldestCity.id)" class="btn-detail">
           상세보기
         </button>
       </div>
@@ -133,6 +150,11 @@ const cleanAirCities = computed(() => {
 .stat-card.hottest {
   border: 2px solid #fca5a5;
   background-color: #fef2f2;
+}
+
+.stat-card.coldest {
+  border: 2px solid #93c5fd;
+  background-color: #eff6ff;
 }
 
 .stat-card h3 {
