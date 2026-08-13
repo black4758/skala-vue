@@ -113,6 +113,60 @@ Pinia를 도입하여 전역 상태 관리를 구현했습니다. 온도 단위(
 
 ---
 
+## 🚀 주요 페이지 및 파일 구조 안내
+
+이 프로젝트는 Vue Router를 통해 크게 3가지 주요 페이지로 구성되어 있습니다.
+
+### 1. 메인 대시보드 (`/src/views/WeatherHomeView.vue`)
+![메인 대시보드](./docs/lastmain.png)
+- **역할**: 전국 주요 도시의 현재 날씨(온도, 체감 온도, 습도, 미세먼지 등)를 카드 형태로 한눈에 보여주는 메인 화면입니다.
+- **주요 기능**: 
+  - 검색창(`src/components/exercise/SearchBar.vue`)을 통한 실시간 도시 검색 필터링
+  - 도시별 날씨 상세 페이지로 이동
+  - 🚨 **불쾌지수 경고**: 불쾌지수(Discomfort Index)가 높은 도시 카드를 클릭하면 브라우저 경고창(Alert)으로 알림 발생
+    <br>![불쾌지수 경고](./docs/lastalert.png)
+
+### 2. 도시별 상세 예보 (`/src/views/WeatherDetailView.vue`)
+![상세 예보](./docs/lastdetail.png)
+- **역할**: 대시보드에서 특정 도시를 클릭했을 때 나타나는 상세 정보 페이지입니다.
+- **주요 기능**: 현재 날씨 외에도 **향후 24시간 시간별 일기 예보** 리스트를 스크롤 형태로 제공합니다.
+
+### 3. 기상 통계 분석 (`/src/views/WeatherStatsView.vue`)
+![기상 통계 분석](./docs/laststats.png)
+- **역할**: 받아온 날씨 데이터를 바탕으로 다양한 기상 통계를 계산하여 보여줍니다.
+- **주요 기능**: 
+  - 전국 평균 기온 계산
+  - 가장 덥거나 추운 지역, 바람이 강한 지역 도출
+  - ✈️ **여행가기 좋은 지역 추천 (온도 18~26도, 습도 60% 이하, 미세먼지 좋음/보통)**
+
+### 4. 기타 페이지 및 공통 컴포넌트
+- **기타 뷰(View)**: 
+  - `src/views/WeatherAboutView.vue` (서비스 소개 페이지)
+    <br>![서비스 소개](./docs/lastabout.png)
+  - `src/views/NotFoundView.vue` (잘못된 경로 진입 시 보여주는 404 에러 페이지)
+    <br>![404 에러](./docs/last404.png)
+  - `src/App.vue` (최상위 라우팅 및 전역 컴포넌트 관리)
+- **UI 컴포넌트**: 
+  - `src/components/exercise/WeatherCard.vue` (날씨 정보 표시 카드)
+  - `src/components/exercise/SearchBar.vue` (상단 검색창)
+  - `src/components/exercise/UnitToggler.vue` (단위 변환 토글 버튼)
+  - `src/components/exercise/SelectionFeedback.vue` (도시 선택 시 하단에 표시되는 알림바)
+- **상태 관리**: `src/stores/weatherStore.js` (API 호출 및 날씨 전역 상태 관리), `src/stores/configStore.js` (온도 단위 전역 상태 관리)
+
+---
+
+## 🤖 구글 Gemini 기반 '날씨 요정 챗봇' (보안 비활성화 상태)
+
+![날씨 요정 챗봇](./docs/lastchatbot.png)
+
+프로젝트 내부에 구글의 **Gemini AI API**와 **Function Calling(도구 호출)** 기능을 활용한 인공지능 날씨 챗봇 기능이 완벽하게 구현되어 있습니다.
+
+- **구현 내용**: `src/components/chatbot/WeatherChatbot.vue`를 통해 우측 하단 플로팅 버튼으로 챗봇을 열 수 있으며, 실시간 스트리밍(Streaming) 타이핑 효과로 날씨를 묻고 답할 수 있도록 개발되었습니다.
+- **보안 처리 (주석 처리)**: 현재 Vercel과 같은 클라이언트 환경(프론트엔드)에서 직접 API를 호출할 경우 `VITE_GEMINI_API_KEY`가 브라우저 네트워크를 통해 유출될 위험이 존재합니다. 
+- **조치 결과**: 실무 보안 원칙을 준수하기 위해 코드는 모두 완성하여 `src/components/chatbot/WeatherChatbot.vue` 파일로 남겨두었지만, 메인 앱(`src/App.vue`)에서의 렌더링은 **임시 주석 처리(비활성화)**하여 배포 시 API 키 유출을 원천 차단해 두었습니다.
+
+---
+
 ### 실행 방법
 
 ```sh
