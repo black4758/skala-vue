@@ -2,7 +2,7 @@
 <script setup>
 // 💡 UnitToggler 컴포넌트를 불러옵니다!
 import UnitToggler from './components/exercise/UnitToggler.vue'
-import WeatherChatbot from './components/chatbot/WeatherChatbot.vue'
+// import WeatherChatbot from './components/chatbot/WeatherChatbot.vue' // API 키 보호를 위해 임시 비활성화
 </script>
 
 <template>
@@ -29,8 +29,8 @@ import WeatherChatbot from './components/chatbot/WeatherChatbot.vue'
       <RouterView />
     </main>
 
-    <!-- 날씨 챗봇 컴포넌트 (전역) -->
-    <WeatherChatbot />
+    <!-- 날씨 챗봇 컴포넌트 (전역) - 보안을 위해 임시 비활성화 -->
+    <!-- <WeatherChatbot /> -->
   </div>
 </template>
 
