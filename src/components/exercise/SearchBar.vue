@@ -4,6 +4,8 @@ defineProps({
   searchQuery: String
 })
 
+import InputText from 'primevue/inputtext'
+
 defineEmits(['update-query'])
 </script>
 
@@ -15,12 +17,14 @@ defineEmits(['update-query'])
         <circle cx="11" cy="11" r="8"></circle>
         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
       </svg>
-      <input
+      <InputText
         id="city-search"
         type="text"
         :value="searchQuery"
         @input="$emit('update-query', $event.target.value)"
         placeholder="검색할 도시 이름을 입력하세요..."
+        class="w-full"
+        style="padding-left: 42px; border-radius: 10px;"
       />
     </div>
     <p class="search-result">
@@ -50,21 +54,11 @@ defineEmits(['update-query'])
   width: 18px;
   height: 18px;
   color: var(--text-muted, #64748b);
+  z-index: 10;
 }
 
-.input-wrapper input {
+.w-full {
   width: 100%;
-  padding: 12px 16px 12px 42px;
-  font-size: 0.95rem;
-  border: 1.5px solid var(--border-color, #e2e8f0);
-  border-radius: 10px;
-  outline: none;
-  transition: all 0.2s ease;
-}
-
-.input-wrapper input:focus {
-  border-color: var(--primary-color, #2563eb);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 .search-result {

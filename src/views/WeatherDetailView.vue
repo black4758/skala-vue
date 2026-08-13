@@ -4,6 +4,7 @@ import { computed, onMounted } from 'vue' // 💡 computed 추가, ref 제거
 import { useRoute, useRouter } from 'vue-router'
 import { useConfigStore } from '../stores/configStore'
 import { useWeatherStore } from '../stores/weatherStore'
+import Button from 'primevue/button'
 
 const route = useRoute()
 const router = useRouter()
@@ -77,12 +78,12 @@ const goBack = () => {
       </div>
       
       <!-- 하단 버튼 -->
-      <button @click="goBack" class="back-btn">⬅ 대시보드로 돌아가기</button>
+      <Button @click="goBack" class="w-full" label="⬅ 대시보드로 돌아가기" size="large" />
     </div>
     
     <div v-else class="error-card">
       <h2>😢 도시 정보를 찾을 수 없습니다.</h2>
-      <button @click="goBack" class="back-btn">대시보드로 돌아가기</button>
+      <Button @click="goBack" class="w-full mt-4" label="대시보드로 돌아가기" size="large" />
     </div>
   </div>
 </template>
@@ -182,22 +183,8 @@ const goBack = () => {
   color: #1e293b;
 }
 
-.back-btn {
-  width: 100%;
-  padding: 14px;
-  background-color: #2563eb;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 1.05rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.back-btn:hover {
-  background-color: #1d4ed8;
-}
+.w-full { width: 100%; }
+.mt-4 { margin-top: 16px; }
 
 .error-card {
   text-align: center;

@@ -60,7 +60,7 @@ const cleanAirCities = computed(() => {
         <h3>🔥 가장 더운 지역</h3>
         <div class="stat-value">{{ hottestCity.name }}</div>
         <div class="stat-sub">({{ configStore.convertTemp(hottestCity.temp) }}{{ configStore.unitSymbol }})</div>
-        <button @click="router.push('/weather/' + hottestCity.id)" class="link-btn">
+        <button @click="router.push('/weather/' + hottestCity.id)" class="btn-detail">
           상세보기
         </button>
       </div>
@@ -70,7 +70,7 @@ const cleanAirCities = computed(() => {
         <h3>🌬️ 바람이 가장 강한 지역</h3>
         <div class="stat-value">{{ windiestCity.name }}</div>
         <div class="stat-sub">풍속 {{ windiestCity.wind }}</div>
-        <button @click="router.push('/weather/' + windiestCity.id)" class="link-btn blue-btn">
+        <button @click="router.push('/weather/' + windiestCity.id)" class="btn-detail">
           상세보기
         </button>
       </div>
@@ -145,17 +145,23 @@ const cleanAirCities = computed(() => {
   font-weight: 800;
   color: #0f172a;
 }
-.link-btn {
+.btn-detail {
+  width: 100%;
   margin-top: 10px;
-  padding: 6px 12px;
-  background: #dc2626;
-  color: white;
+  padding: 8px 0;
+  background: #f1f5f9;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
+  color: #475569;
+  font-size: 0.85rem;
+  font-weight: 600;
   cursor: pointer;
+  transition: background 0.2s;
 }
-.link-btn.blue-btn {
-  background: #2563eb;
+
+.btn-detail:hover {
+  background: #e2e8f0;
+  color: #0f172a;
 }
 
 .lists-grid {
