@@ -56,7 +56,7 @@ const handleUpdateQuery = (newQuery) => {
 
 
 <template>
-  <div class="weather-mockup">
+  <div>
     <!-- 헤더 영역 -->
     <header class="app-header">
       <h2>☀️ Weather Dashboard</h2>
@@ -104,27 +104,6 @@ const handleUpdateQuery = (newQuery) => {
 
 <style scoped>
 /* 전역 레이아웃 및 뼈대에 해당하는 CSS만 남김 */
-.weather-mockup {
-  --primary-color: #2563eb;
-  --primary-hover: #1d4ed8;
-  --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  --card-bg: #ffffff;
-  --text-main: #0f172a;
-  --text-muted: #64748b;
-  --border-color: #e2e8f0;
-
-  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-  width: 100%;
-  max-width: 768px;
-  margin: 40px auto;
-  padding: 32px;
-  background: var(--bg-gradient);
-  border-radius: 24px;
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
-  color: var(--text-main);
-  box-sizing: border-box;
-}
-
 .app-header {
   margin-bottom: 28px;
   text-align: center;

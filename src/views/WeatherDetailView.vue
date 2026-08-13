@@ -89,17 +89,16 @@ const goBack = () => {
 
 <style scoped>
 .detail-view {
-  display: flex;
-  justify-content: center;
+  width: 100%;
 }
 
 .detail-card, .error-card {
   background: white;
   width: 100%;
-  max-width: 500px;
   padding: 32px;
   border-radius: 20px;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
 }
 
 .card-header {
