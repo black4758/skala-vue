@@ -1,32 +1,31 @@
 <!-- src/views/WeatherDetailView.vue -->
 <script setup>
-import { ref, onMounted } from 'vue'
+import { computed, onMounted } from 'vue' // 💡 computed 추가, ref 제거
 import { useRoute, useRouter } from 'vue-router'
 import { useConfigStore } from '../stores/configStore'
+import { useWeatherStore } from '../stores/weatherStore'
 
 const route = useRoute()
 const router = useRouter()
-const cityDetail = ref(null)
 const configStore = useConfigStore()
-
-// 임시 Mock Data (상세 기상관측 정보 추가)
-const mockDetailData = [
-  { id: 'city_01', name: '서울', temp: 28, status: '맑음', humidity: 60, wind: '2m/s 북동풍', fineDust: '보통', sunrise: '05:30', sunset: '19:40' },
-  { id: 'city_02', name: '수원', temp: 24, status: '비', humidity: 80, wind: '4m/s 남풍', fineDust: '좋음', sunrise: '05:32', sunset: '19:39' },
-  { id: 'city_03', name: '부산', temp: 26, status: '구름', humidity: 70, wind: '5m/s 바닷바람', fineDust: '좋음', sunrise: '05:25', sunset: '19:30' },
-  { id: 'city_04', name: '제주', temp: 26, status: '구름', humidity: 80, wind: '7m/s 남동풍', fineDust: '보통', sunrise: '05:40', sunset: '19:45' },
-]
+const weatherStore = useWeatherStore()
 
 onMounted(() => {
-  // router.params.cityId를 기반으로 Mount 시점에 객체 선택
+  // 스토어에 "날씨 데이터 좀 가져와 줘!" 라고 요청 (이미 있으면 알아서 안 가져옴)
+  weatherStore.fetchAllWeather() 
+})
+
+// 💡 핵심: 가짜 데이터 지우고, 스토어에서 내 도시(targetId)랑 이름이 똑같은 애를 찾아서 반환!
+const cityDetail = computed(() => {
   const targetId = route.params.cityId
-  cityDetail.value = mockDetailData.find(city => city.id === targetId)
+  return weatherStore.weatherList.find(city => city.id === targetId)
 })
 
 const goBack = () => {
   router.push('/')
 }
 </script>
+
 <template>
   <div class="detail-view">
     <div v-if="cityDetail" class="detail-card">

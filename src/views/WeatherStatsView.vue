@@ -1,34 +1,32 @@
 <!-- src/views/WeatherStatsView.vue -->
 <script setup>
-import { ref, computed } from 'vue'
+import { onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useConfigStore } from '../stores/configStore'
+import { useWeatherStore } from '../stores/weatherStore'
 
 const router = useRouter()
 const configStore = useConfigStore()
+const weatherStore = useWeatherStore()
 
-// 대시보드에서 사용했던 임시 데이터 재활용
-const weatherList = ref([
-  { id: 'city_01', name: '서울', temp: 28, status: '맑음', humidity: 60 },
-  { id: 'city_02', name: '수원', temp: 24, status: '비', humidity: 80 },
-  { id: 'city_03', name: '부산', temp: 26, status: '구름', humidity: 70 },
-  { id: 'city_04', name: '제주', temp: 26, status: '구름', humidity: 80 },
-])
+onMounted(() => {
+  weatherStore.fetchAllWeather()
+})
 
 // 💡 배운 것 활용 1: 전체 평균 기온 계산
 const averageTemp = computed(() => {
-  const total = weatherList.value.reduce((sum, city) => sum + city.temp, 0)
-  return (total / weatherList.value.length).toFixed(0) // 소수점 1자리까지
+  const total = weatherStore.weatherList.reduce((sum, city) => sum + city.temp, 0)
+  return (total / weatherStore.weatherList.length).toFixed(0) // 소수점 1자리까지
 })
 
 // 💡 배운 것 활용 2: 가장 기온이 높은 도시 찾기
 const hottestCity = computed(() => {
-  return [...weatherList.value].sort((a, b) => b.temp - a.temp)[0]
+  return [...weatherStore.weatherList].sort((a, b) => b.temp - a.temp)[0]
 })
 
 // 💡 배운 것 활용 3: 습도가 70% 이상인 꿉꿉한 지역 필터링
 const highHumidityCities = computed(() => {
-  return weatherList.value.filter(city => city.humidity >= 70)
+  return weatherStore.weatherList.filter(city => city.humidity >= 70)
 })
 </script>
 

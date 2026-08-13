@@ -1,29 +1,28 @@
 <!-- src/views/WeatherHomeView.vue (기존 WeatherParent.vue 대체) -->
 <script setup>
-import { ref, computed, watch, watchEffect } from 'vue'
-import { useRouter } from 'vue-router' // 💡 라우터 이동을 위해 추가
+import { ref, computed, watch, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+// 💡 방금 만든 스토어 가져오기!
+import { useWeatherStore } from '../stores/weatherStore' 
 
-// 💡 부품 컴포넌트들이 들어있는 components/exercise 폴더 경로로 수정
 import BaseDashboardCard from '../components/exercise/BaseDashboardCard.vue'
 import SearchBar from '../components/exercise/SearchBar.vue'
 import WeatherCard from '../components/exercise/WeatherCard.vue'
 import SelectionFeedback from '../components/exercise/SelectionFeedback.vue'
 
-const router = useRouter() // 💡 라우터 인스턴스 준비
+const router = useRouter()
+const weatherStore = useWeatherStore() // 스토어 연결
 
-// 1. 반응형 상태 정의 유지
 const searchQuery = ref('')
 const selectedCityInfo = ref(null)
-const weatherList = ref([
-  { id: 'city_01', name: '서울', temp: 28, status: '맑음', humidity: 60 },
-  { id: 'city_02', name: '수원', temp: 24, status: '비', humidity: 80 },
-  { id: 'city_03', name: '부산', temp: 26, status: '구름', humidity: 70 },
-  { id: 'city_04', name: '제주', temp: 26, status: '구름', humidity: 80 },
-])
 
-// 💡 상세보기 클릭 시 alert 대신 Programmatic Navigation 처리 (요구사항 3 적용)
+// 💡 화면 켜질 때 스토어의 데이터 호출 함수 실행
+onMounted(() => {
+  weatherStore.fetchAllWeather()
+})
+
+// 화면 이동 및 선택
 const showDetail = (cityId) => {
-  // WeatherCard에서 넘겨준 id를 받아 상세 페이지로 이동합니다.
   router.push('/weather/' + cityId)
 }
 
@@ -31,47 +30,30 @@ const selectCity = (cityName) => {
   selectedCityInfo.value = cityName
 }
 
-// 2. 검색어 필터링 유지
-const filteredWeatherList = computed(() => {
-  if (!searchQuery.value) return weatherList.value
-  return weatherList.value.filter((city) => city.name.includes(searchQuery.value.trim()))
-})
-
-// 5. 불쾌지수 계산 유지
+// 💡 엄청나게 간결해진 리스트! (불쾌지수 계산은 스토어에서 이미 끝남)
 const displayWeatherList = computed(() => {
-  return filteredWeatherList.value.map((city) => {
-    const discomfIndex = Math.round(
-      0.81 * city.temp + 0.01 * city.humidity * (0.99 * city.temp - 14.3) + 46.3,
-    )
-    return {
-      ...city,
-      discomfIndex,
-      isHighDiscomfort: discomfIndex >= 75,
-    }
-  })
+  if (!searchQuery.value) return weatherStore.weatherList
+  
+  // 검색어가 있으면 필터링해서 보여주기
+  return weatherStore.weatherList.filter((city) => 
+    city.name.includes(searchQuery.value.trim())
+  )
 })
 
-// 3 & 5. selectedCityInfo 감시 유지
-watch(selectedCityInfo, (newCityName, oldCityName) => {
-  console.log(`[watch] 선택 도시 변경: ${oldCityName || '없음'} -> ${newCityName}`)
+// 선택 도시 감시
+watch(selectedCityInfo, (newCityName) => {
   if (!newCityName) return
-
   const targetCity = displayWeatherList.value.find((city) => city.name === newCityName)
   if (targetCity && targetCity.isHighDiscomfort) {
     alert(`⚠️ 경고: ${targetCity.name}의 불쾌지수는 [${targetCity.discomfIndex}]로 매우 높습니다!`)
   }
 })
 
-// 3. searchQuery 감시 유지
-watchEffect(() => {
-  console.log(`[watchEffect] 현재 검색어: "${searchQuery.value || ''}"`)
-})
-
-// SearchBar로부터의 이벤트 처리
 const handleUpdateQuery = (newQuery) => {
   searchQuery.value = newQuery
 }
 </script>
+
 
 <template>
   <div class="weather-mockup">
