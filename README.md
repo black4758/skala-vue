@@ -69,10 +69,12 @@ Pinia를 도입하여 전역 상태 관리를 구현했습니다. 온도 단위(
   - `toggleUnit` (Action): 단위를 상호 전환하는 함수
   - `convertTemp` (Action): 섭씨 원본 데이터를 현재 단위에 맞춰 변환하는 함수
 - **적용 화면**: 상단 네비게이션 바의 단위 변경 버튼(`UnitToggler.vue`) 클릭 시 메인 대시보드, 상세 날씨, 기상 통계 등 앱 전체에 단위가 일괄 적용됩니다.
+  ![store 적용 결과](docs/store.png)
 
 ---
 
 ### 실행 방법
+
 ```sh
 npm install
 npm run dev
