@@ -50,10 +50,10 @@ const cleanAirCities = computed(() => {
 // 💡 추가 활용 7: 여행가기 좋은 지역 추천 (온도 18~26도, 습도 60% 이하, 미세먼지 좋음/보통)
 const goodTravelCities = computed(() => {
   return weatherStore.weatherList.filter(city => {
-    const isGoodTemp = city.temp >= 18 && city.temp <= 26
+    const isGoodTemp = city.temp >= 18 && city.temp <= 26 // 테스트를 위해 임시 주석 처리
     const isGoodHumidity = city.humidity <= 60
     const isGoodAir = city.fineDust.includes('좋음') || city.fineDust.includes('보통')
-    return isGoodTemp && isGoodHumidity && isGoodAir
+    return  isGoodTemp &&  isGoodHumidity && isGoodAir
   })
 })
 </script>
@@ -135,7 +135,7 @@ const goodTravelCities = computed(() => {
       <!-- 리스트 3: 여행 추천 지역 -->
       <div class="list-section travel">
         <h3>
-          ✈️ 지금 여행가기 딱 좋은 지역
+          여행 추천 지역
           <span class="info-wrapper">
             <i class="pi pi-info-circle info-icon"></i>
             <span class="info-tooltip">
@@ -153,7 +153,7 @@ const goodTravelCities = computed(() => {
           </li>
         </ul>
         <div v-else class="empty-state">
-          <p>현재 여행 조건(온도/습도/공기)에 딱 맞는 곳이 없네요 😭</p>
+          <p>현재 여행 조건(온도/습도/공기)에 딱 맞는 곳이 없어요</p>
         </div>
       </div>
     </div>
